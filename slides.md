@@ -1,362 +1,341 @@
 ---
 theme: default
-background: '#f5f5f7'
+background: '#ffffff'
 title: You can be productive with Xcode, and you know it
-class: text-center
-drawings:
-  persist: false
-transition: slide-left
+class: text-left
+transition: fade
 mdc: true
-duration: 35min
-fonts:
-  sans: 'SF Pro Display, system-ui, -apple-system, sans-serif'
-  mono: 'SF Mono, Menlo, Monaco, monospace'
 ---
 
 <style>
-/* Global Apple-inspired styles */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 :root {
-  --apple-blue: #007AFF;
-  --apple-purple: #AF52DE;
-  --apple-pink: #FF2D55;
-  --apple-orange: #FF9500;
-  --apple-gray: #1d1d1f;
-  --apple-light-gray: #f5f5f7;
+  /* Colors */
+  --color-text: #1a1a1a;
+  --color-text-muted: #666;
+  --color-text-subtle: #999;
+  --color-bg: #ffffff;
+  --color-bg-muted: #fafafa;
+  --color-accent: #1a1a1a;
+  --color-border: #eee;
+
+  /* Typography */
+  --font-base: 'Inter', -apple-system, system-ui, sans-serif;
+  --size-h1: 2.75rem;
+  --size-h2: 1.4rem;
+  --size-h3: 1.15rem;
+  --size-base: 1.1rem;
+  --size-small: 0.95rem;
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --line-base: 1.6;
+  --line-tight: 1.2;
+
+  /* Spacing */
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --gap-cols: 3rem;
+
+  /* Layout */
+  --radius: 4px;
+  --border-width: 3px;
 }
 
+* {
+  font-family: var(--font-base) !important;
+}
+
+/* Base slide styling */
 .slidev-layout {
-  padding: 3rem 4rem 2rem 4rem !important;
-  background: var(--apple-light-gray);
+  background: var(--color-bg);
+  color: var(--color-text);
+  padding: var(--space-2xl) 3.5rem !important;
+  font-size: var(--size-base);
+  line-height: var(--line-base);
+  position: relative;
+  z-index: 1;
 }
 
-/* Typography */
+/* Ensure nav controls don't bleed through */
+.slidev-layout::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--color-bg);
+  z-index: -1;
+}
+
+/* Typography system */
 h1 {
-  font-size: 2.5rem !important;
-  font-weight: 700 !important;
-  letter-spacing: -0.03em !important;
-  line-height: 1.1 !important;
-  margin-bottom: 0.75rem !important;
-  color: var(--apple-gray) !important;
+  font-size: var(--size-h1) !important;
+  font-weight: var(--weight-bold) !important;
+  color: var(--color-text) !important;
+  margin-bottom: 0 !important;
+  line-height: var(--line-tight) !important;
+}
+
+/* H2 as subtitle when following H1 */
+h1 + h2 {
+  font-size: 2rem !important;
+  font-weight: var(--weight-semibold) !important;
+  color: var(--color-text) !important;
+  margin-top: 0.25rem !important;
+  margin-bottom: var(--space-sm) !important;
 }
 
 h2 {
-  font-size: 1.25rem !important;
-  font-weight: 600 !important;
-  letter-spacing: -0.02em !important;
-  margin-bottom: 0.5rem !important;
-  color: var(--apple-gray) !important;
+  font-size: var(--size-h2) !important;
+  font-weight: var(--weight-semibold) !important;
+  color: var(--color-text) !important;
+  margin-top: var(--space-lg) !important;
+  margin-bottom: var(--space-sm) !important;
 }
 
 h3 {
-  font-size: 1.1rem !important;
-  font-weight: 600 !important;
-  letter-spacing: -0.01em !important;
-  margin-bottom: 0.4rem !important;
+  font-size: var(--size-h3) !important;
+  font-weight: var(--weight-semibold) !important;
+  color: var(--color-text) !important;
+  margin-bottom: var(--space-xs) !important;
 }
 
-/* Apple glass card effect */
-.apple-card {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: saturate(180%) blur(20px);
-  border-radius: 16px;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+strong {
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+}
+
+code {
+  background: var(--color-bg-muted) !important;
+  color: #d14 !important;
+  padding: 0.15em 0.4em !important;
+  border-radius: var(--radius) !important;
+  font-size: 0.9em !important;
+  font-weight: var(--weight-medium) !important;
+}
+
+/* Code blocks with syntax highlighting */
+.slidev-layout pre {
+  background: #282a36 !important;
+  padding: var(--space-md) !important;
+  border-radius: var(--radius) !important;
+  overflow-x: auto !important;
+}
+
+.slidev-layout pre code {
+  background: transparent !important;
+  color: inherit !important;
+  padding: 0 !important;
+}
+
+/* Utility classes */
+.quiet {
+  color: var(--color-text-muted);
+  font-size: var(--size-base);
+  font-weight: var(--weight-normal);
+  margin-top: calc(var(--space-xs) / 2);
+}
+
+.cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap-cols);
+  margin-top: var(--space-md);
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-xl);
+  margin-top: var(--space-md);
+}
+
+.box {
+  background: var(--color-bg-muted);
   padding: 1.25rem;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: var(--radius);
 }
 
-.apple-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+.box h3 {
+  margin-top: 0;
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--color-border);
 }
 
-/* Gradient text */
-.gradient-text {
-  background: linear-gradient(135deg, var(--apple-blue), var(--apple-purple));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* Tip admonition */
+.tip {
+  background: #f0f9ff;
+  border-left: 4px solid #0284c7;
+  padding: var(--space-md);
+  border-radius: var(--radius);
+  margin: var(--space-md) 0;
 }
 
-/* Badge */
-.apple-badge {
-  display: inline-block;
-  padding: 0.35rem 1rem;
-  background: var(--apple-blue);
-  color: white;
-  border-radius: 100px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  letter-spacing: 0.01em;
+.tip h3 {
+  margin-top: 0;
+  color: #0284c7;
+  font-size: var(--size-h3);
+  margin-bottom: var(--space-xs);
 }
 
-/* Subtitle */
-.subtitle {
-  font-size: 0.9rem;
-  color: #86868b;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  margin-top: 0.4rem;
+.tip h3::before {
+  content: "💡 ";
+  margin-right: 0.5rem;
 }
 
-/* List styling */
-.slidev-layout li {
-  margin: 0.4rem 0;
-  line-height: 1.5;
-  color: var(--apple-gray);
-  font-size: 0.95rem;
+/* Phase intro styling */
+.phase-intro h1::before {
+  content: '';
+  display: block;
+  width: 4rem;
+  height: 0.25rem;
+  background: var(--color-accent);
+  margin-bottom: var(--space-lg);
 }
 
+/* List system */
 .slidev-layout ul {
   list-style: none;
-  padding-left: 0;
+  padding: 0;
+  margin: var(--space-sm) 0;
+}
+
+.slidev-layout li {
+  margin: var(--space-xs) 0;
+  padding-left: var(--space-lg);
+  position: relative;
+  line-height: 1.5;
 }
 
 .slidev-layout li::before {
-  content: "•";
-  color: var(--apple-blue);
-  font-weight: bold;
-  display: inline-block;
-  width: 1.3em;
-  font-size: 1em;
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--color-text-muted);
+  font-weight: var(--weight-normal);
 }
 
-/* Code styling */
-code {
-  background: rgba(0, 122, 255, 0.1) !important;
-  color: var(--apple-blue) !important;
-  padding: 0.2em 0.5em !important;
-  border-radius: 6px !important;
-  font-family: 'SF Mono', monospace !important;
-  font-size: 0.9em !important;
+.slidev-layout li li {
+  font-size: var(--size-small);
+  color: var(--color-text-muted);
+  margin: calc(var(--space-xs) / 2) 0;
+  padding-left: 1.25rem;
 }
 
-/* Phase divider */
-.phase-divider {
-  width: 60px;
-  height: 5px;
-  background: linear-gradient(90deg, var(--apple-blue), var(--apple-purple));
-  border-radius: 100px;
-  margin: 2rem auto;
+.slidev-layout li li::before {
+  content: '·';
+  color: var(--color-text-subtle);
 }
 
-/* Column layouts */
-.two-column {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  margin-top: 1rem;
+/* Hide/layer navigation properly */
+.slidev-page,
+#slide-content {
+  position: relative;
+  z-index: 10;
 }
 
-.three-column {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 1.5rem;
-  margin-top: 1rem;
-}
-
-/* Hero section */
-.hero-section {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  text-align: center;
-}
-
-/* Feature icon */
-.feature-icon {
-  font-size: 2.5rem;
-  margin-bottom: 0.75rem;
-  display: block;
-}
-
-/* Problem-solution layout */
-.problem-box {
-  background: linear-gradient(135deg, rgba(255, 45, 85, 0.1), rgba(255, 149, 0, 0.1));
-  border-left: 4px solid var(--apple-pink);
-  padding: 1rem;
-  border-radius: 12px;
-  margin: 1rem 0;
-}
-
-.solution-box {
-  background: linear-gradient(135deg, rgba(0, 122, 255, 0.1), rgba(175, 82, 222, 0.1));
-  border-left: 4px solid var(--apple-blue);
-  padding: 1rem;
-  border-radius: 12px;
-  margin: 1rem 0;
-}
-
-/* Section header */
-.section-header {
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-.section-header h1 {
-  margin-bottom: 0.5rem;
-}
-
-/* Content spacing */
-.content-wrapper {
-  margin-top: 2rem;
-}
-
-/* Make sure content doesn't overlap with controls */
-.slidev-layout {
-  overflow-y: auto;
+.slidev-layout > * {
+  position: relative;
+  z-index: 2;
 }
 </style>
 
-<div class="hero-section">
+---
 
-# You can be productive<br>with Xcode
+# You can be productive with Xcode
 
-<div class="subtitle" style="font-size: 1.5rem; margin-top: 1.5rem; margin-bottom: 2rem;">
-and you know it
+<div class="quiet">and you know it</div>
+
+<div style="margin-top: var(--space-2xl); color: var(--color-text-muted);">
+A practical guide to fixing the stuff that actually slows you down
 </div>
 
-<div class="apple-badge">A practical guide to avoiding common pitfalls</div>
+---
+
+# Hi, I'm Pedro
+
+<div style="margin-top: var(--space-2xl); font-size: 1.15rem; line-height: 1.8;">
+
+**Pedro Piñera Buendía**
+
+Based in Berlin (originally from Murcia)
+
+Builder turned founder with Tuist
+
+Enjoy building dev tools
 
 </div>
 
 ---
 
-<div class="hero-section">
+# Two phases, seven problems
 
-<div class="section-header">
+<div style="margin-top: var(--space-2xl);">
 
-# The Journey
+**Development** — the stuff that happens on your machine
 
-<div class="phase-divider"></div>
+- Frequent merge conflicts
+- Clean builds you shouldn't need
+- Architecture & build performance
+- "Works on my machine" moments
 
-</div>
+<div style="margin-top: var(--space-xl);"></div>
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 900px; width: 100%;">
+**Integration** — the stuff that happens on CI
 
-<div class="apple-card" style="text-align: center;">
-  <div class="feature-icon">🔨</div>
-  <h3 style="color: var(--apple-blue);">Development</h3>
-  <p class="subtitle">Local workflow optimization</p>
-</div>
-
-<div class="apple-card" style="text-align: center;">
-  <div class="feature-icon">🔄</div>
-  <h3 style="color: var(--apple-purple);">Integration</h3>
-  <p class="subtitle">CI/CD efficiency</p>
-</div>
-
-</div>
+- CI queues that waste your time
+- Flaky tests that waste everyone's time
+- Slow builds that waste company money
 
 </div>
 
 ---
-layout: center
+class: phase-intro
 ---
 
-<div style="text-align: center;">
-
-<div class="feature-icon">🔨</div>
-
-# <span class="gradient-text">Phase 1: Development</span>
-
-<p class="subtitle" style="font-size: 1.25rem; margin-top: 1rem;">Mastering your local workflow</p>
-
-</div>
+# Development
 
 ---
 
-<div class="section-header">
+# Frequent Merge Conflicts
+## Xcode Projects
 
-# Frequent Git Conflicts
+<div class="quiet">The `project.pbxproj` problem</div>
 
-<div class="subtitle">The Xcode project file curse</div>
-
-</div>
-
-<div class="two-column">
-
-<div class="problem-box">
-
-## The Problem
-
-- `project.pbxproj` is a merge nightmare
-- Adding files causes conflicts
-- Build settings changes collide
-- Team velocity suffers
-
-</div>
-
-<div class="solution-box">
-
-## Solutions
-
-<v-clicks>
-
-- **Use project generators**
-  - Tuist, XcodeGen, or SwiftPM
-  - Generate from declarative configs
-  - No more manual project edits
-
-- **Adopt modular architecture**
-  - Multiple smaller projects
-  - Reduced conflict surface
-
-</v-clicks>
-
-</div>
-
-</div>
-
----
-
-<div class="section-header">
-
-# Clean Builds & Derived Data
-
-<div class="subtitle">Breaking the CMD+SHIFT+K habit</div>
-
-</div>
-
-<div class="two-column">
+<div class="cols">
 
 <div>
 
-<h3 style="color: var(--apple-pink);">Why it happens</h3>
+### The problem
 
-<v-clicks>
+Someone adds a file, someone else adds a file. `project.pbxproj` explodes.
 
-- Incremental build cache corruption
-- Xcode indexing issues
-- Build system inconsistencies
-- "It works after clean build"
+Now you're doing archaeology in a 10,000 line XML-ish file instead of writing code.
 
-</v-clicks>
+Every team member has hit this. Multiple times a week.
 
 </div>
 
 <div>
 
-<h3 style="color: var(--apple-blue);">Better approaches</h3>
+### Stop editing it directly
 
-<v-clicks>
+**Use project generators/managers**
+- Tuist, XcodeGen, or SwiftPM
+- Generate from something humans can read
+- Commit the definitions, not the generated project
 
-- **Stable build graphs**
-  - Well-defined dependencies
-  - Avoid circular deps
-  - Explicit imports
-
-- **Build system optimization**
-  - New build system
-  - Proper declarations
-
-- **Automation**
-  - CI validates clean builds
-  - Local incremental builds
-
-</v-clicks>
+**If you can't do that**
+- Smaller, focused PRs
+- Feature modules as separate projects
 
 </div>
 
@@ -364,238 +343,480 @@ layout: center
 
 ---
 
-<div class="section-header">
+# Frequent Merge Conflicts
+## Buildable Folders
 
-# Non-determinism Across Environments
+<div class="quiet">From N-to-N to 1-to-1</div>
 
-<div class="subtitle">Works on my machine syndrome</div>
-
-</div>
-
-<div class="two-column">
+<div class="cols">
 
 <div>
 
-<h3 style="color: var(--apple-pink);">Root causes</h3>
+### The idea
 
-<v-clicks>
+Reference entire folders instead of individual files.
 
-- Xcode version mismatches
-- Different simulator runtimes
-- macOS version differences
-- Environment-specific configs
+**Traditional:**
+- N files = N potential conflicts
+
+**Buildable folders:**
+- 1 folder = 1 potential conflict
+
+Add or remove files without touching `project.pbxproj`.
+
+</div>
+
+<div>
+
+### How to use
+
+- Right-click folder → "Convert to folders"
+- Files are automatically discovered
+- No project changes for file additions/removals
+
+**Note:** Conflicts don't disappear completely. You'll still get them for build settings, targets, or schemes.
+
+</div>
+
+</div>
+
+---
+
+# Frequent Merge Conflicts
+## Monolith Files
+
+<div class="quiet">The files everyone touches</div>
+
+<div class="cols">
+
+<div>
+
+### Find your hotspots
+
+AppDelegate. Router. Constants. Config files. Everyone touches them.
+
+**Run this in your repo:**
+
+```bash
+git log --pretty=format: --name-only \
+  | sort | uniq -c | sort -rn \
+  | head -20
+```
+
+Shows your top 20 most-modified files.
+
+</div>
+
+<div>
+
+### Split them up
+
+**Break apart the monolith**
+- Feature-based organization
+- Dependency injection over singletons
+- Configuration as separate modules
+
+**For constants/config**
+- Generate from build scripts
+- Separate file per feature
+
+</div>
+
+</div>
+
+---
+
+# Clean Builds
+## & Derived Data
+
+<div class="quiet">Why it keeps breaking</div>
+
+<div class="cols">
+
+<div>
+
+### What is derived data?
+
+Xcode's cache. References files by absolute path.
+
+Move project? Switch branches? Previews stop working.
+
+### The consequence
+
+"Have you tried cleaning derived data?"
+
+This shouldn't be our "have you tried restarting it?"
+
+</div>
+
+<div>
+
+### The real problem
+
+Build graph links undeclared dependencies.
+
+**Actual vs declared:**
+- Actual: What code uses
+- Declared: What project says
+
+Mismatch → build system skips compiling dependencies it thinks aren't needed.
+
+[bazel.build/concepts/dependencies](https://bazel.build/concepts/dependencies)
+
+</div>
+
+</div>
+
+---
+
+# Clean Builds
+## How to fix it
+
+<div class="quiet">Make incremental builds reliable</div>
+
+<div class="cols">
+
+<div>
+
+### Build graph hygiene
+
+**Clear module boundaries**
+- Explicit dependencies only
+- No circular dependencies
+
+**What you import = what you depend on**
+
+If you import something, declare it. If you don't import it, don't depend on it.
+
+</div>
+
+<div>
+
+<div class="tip">
+
+### Tip for Tuist users
+
+You can detect undeclared dependencies:
+
+```bash
+tuist inspect implicit-imports
+```
+
+This shows where your code imports something that isn't declared as a dependency.
+
+</div>
+
+</div>
+
+</div>
+
+---
+
+# Clean Builds
+## A path away from derived data
+
+<div class="quiet">Xcode 26's compilation cache</div>
+
+<div class="cols">
+
+<div>
+
+### The evolution
+
+Xcode 26 introduces **compilation cache** — moving from file-based (derived data) to hash-based storage.
+
+Computes hermetic fingerprints instead of path-based references.
+
+**Enable it:**
+```
+COMPILATION_CACHE_ENABLE_CACHING = YES
+```
+
+</div>
+
+<div>
+
+### Benefits
+
+**More deterministic and reliable:**
+- Explicit dependency graph
+- Better task scheduling
+- Works when switching branches
+- Multiple repo copies share cache directory
+
+Early feature, not all tasks cacheable yet.
+
+</div>
+
+</div>
+
+---
+
+# Clean Builds
+## Related build settings
+
+<div class="quiet">Enabling compilation cache components</div>
+
+<div class="cols">
+
+<div>
+
+### SWIFT_ENABLE_COMPILE_CACHE
+
+Enables compilation caching for Swift compiler.
+
+Works with `COMPILATION_CACHE_ENABLE_CACHING`.
+
+### CLANG_ENABLE_COMPILE_CACHE
+
+Enables compilation caching for Clang (C/Objective-C).
+
+Works with `COMPILATION_CACHE_ENABLE_CACHING`.
+
+</div>
+
+<div>
+
+### SWIFT_ENABLE_EXPLICIT_MODULES
+
+Explicitly built modules (enabled by default in Xcode 26).
+
+Required for compilation cache to work with Swift.
+
+### SWIFT_USE_INTEGRATED_DRIVER
+
+Modern Swift compiler driver.
+
+Coordinates compilation tasks efficiently.
+
+</div>
+
+</div>
+
+---
+
+# Architecture & Build Performance
+
+<div class="quiet">Why your architecture choices matter</div>
+
+<div class="cols">
+
+<div>
+
+### Three layers
+
+**App** — Links everything together
+
+**Features** — Independent modules with interface dependencies
+
+**Core** — Shared utilities
+
+</div>
+
+<div>
+
+### Depend on interfaces
+
+Features depend on protocols, implementations injected at app level.
+
+**Tradeoff:**
+- Runtime DI overhead
+- Worth it for build performance
+
+**Why:**
+- Changes don't cascade
+- Features build in parallel
+
+</div>
+
+</div>
+
+---
+
+# Non-determinism
+## Across Environments
+
+<div class="quiet">The "works on my machine" special</div>
+
+<div class="cols">
+
+<div>
+
+### What causes this
+
+- Different Xcode versions
+- Different Swift toolchain versions
+- Different macOS versions
 - Floating dependency versions
 
-</v-clicks>
+</div>
+
+<div>
+
+### Lock it down
+
+**Version everything**
+- `Package.resolved` for SPM
+- Commit lockfiles
+
+**Tooling**
+- Use `mise` for version management
+- `xcode-select -p` in scripts
+- Verify environment in CI
+- Fail fast if wrong version
+
+</div>
+
+</div>
+
+---
+class: phase-intro
+---
+
+# Integration
+
+---
+
+# Limited
+## CI Concurrency
+
+<div class="quiet">Or: why our PRs take 2 hours</div>
+
+<div class="cols">
+
+<div>
+
+### The constraints
+
+macOS runners are expensive. There aren't many of them. Everyone wants them.
+
+Your PR is stuck behind 12 other PRs and nobody's getting coffee today.
 
 </div>
 
 <div>
 
-<h3 style="color: var(--apple-blue);">Solutions</h3>
+### Make the most of it
 
-<v-clicks>
+**Parallelize intelligently**
+- Run tests in parallel (really)
+- Split schemes across runners
+- Matrix builds for multi-platform
 
-- **Version locking**
-  - `.xcode-version` file
-  - SPM Package.resolved
-  - CocoaPods Podfile.lock
+**Don't run what you don't need**
+- Affected tests only
+- Skip unchanged modules
+- Different strategies per branch
 
-- **Environment management**
-  - mise/asdf for tool versions
-  - Consistent Xcode selection
-
-- **Validation**
-  - Setup verification scripts
-  - Environment checks in CI
-
-</v-clicks>
-
-</div>
-
-</div>
-
----
-layout: center
----
-
-<div style="text-align: center;">
-
-<div class="feature-icon">🔄</div>
-
-# <span class="gradient-text">Phase 2: Integration</span>
-
-<p class="subtitle" style="font-size: 1.25rem; margin-top: 1rem;">Optimizing your CI/CD pipeline</p>
-
-</div>
-
----
-
-<div class="section-header">
-
-# Limited CI Concurrency
-
-<div class="subtitle">Making the most of your runners</div>
-
-</div>
-
-<div class="two-column">
-
-<div>
-
-<h3 style="color: var(--apple-pink);">The challenge</h3>
-
-<v-clicks>
-
-- Expensive macOS runners
-- Long queue times
-- Sequential test execution
-- Bottlenecked deployments
-
-</v-clicks>
-
-</div>
-
-<div>
-
-<h3 style="color: var(--apple-purple);">Optimization strategies</h3>
-
-<v-clicks>
-
-- **Smart parallelization**
-  - Split tests across runners
-  - Matrix strategies
-
-- **Selective execution**
-  - Run only affected tests
-  - Skip unchanged modules
-
-- **Resource efficiency**
-  - Cache aggressively
-  - Reuse build artifacts
-
-</v-clicks>
+**Cache everything**
+- SPM dependencies
+- CocoaPods
+- Homebrew
+- Build artifacts if you can
 
 </div>
 
 </div>
 
 ---
-
-<div class="section-header">
 
 # Test Flakiness
 
-<div class="subtitle">The red build that turns green on retry</div>
+<div class="quiet">The build was red, now it's green, nobody changed anything</div>
 
-</div>
-
-<div class="two-column">
+<div class="cols">
 
 <div>
 
-<h3 style="color: var(--apple-pink);">Common culprits</h3>
+### Usually it's one of these
 
-<v-clicks>
+Timing issues. Race conditions. Tests that touch each other's state. Network calls. Animations you're not waiting for.
 
-- Timing-dependent tests
-- Shared state between tests
-- Network/external dependencies
-- UI test instability
-- Race conditions
-
-</v-clicks>
+The test suite is lying to you and you can't trust it anymore.
 
 </div>
 
 <div>
 
-<h3 style="color: var(--apple-purple);">Remedies</h3>
+### Stop the lying
 
-<v-clicks>
+**Isolation**
+- Tests should not share state
+- Real setup/teardown
+- No global mutable state
 
-- **Test isolation**
-  - Independent test cases
-  - Proper setup/teardown
-  - No shared mutable state
+**Determinism**
+- Mock the network
+- Stub external services
+- Control time and dates
 
-- **Deterministic testing**
-  - Mock network calls
-  - Stub external services
+**UI tests**
+- Wait for conditions, not for time
+- Use accessibility identifiers
+- Never use `sleep()`
 
-- **UI test stability**
-  - Proper wait conditions
-  - Accessibility identifiers
-
-</v-clicks>
+**Track it**
+- Note which tests flake
+- Run them multiple times in CI
+- Fix or delete them
 
 </div>
 
 </div>
 
 ---
-
-<div class="section-header">
 
 # Slow CI
 
-<div class="subtitle">Every second counts</div>
+<div class="quiet">Every second costs actual money</div>
+
+<div class="grid-3">
+
+<div class="box">
+
+### Build speed
+
+**Go modular**
+- Smaller compilation units
+- Explicit dependencies
+- Hide implementation details
+
+**Compiler settings**
+- Whole module optimization
+- Parallelize builds
+- Use the build timeline
 
 </div>
 
-<div class="three-column" style="margin-top: 1.5rem;">
+<div class="box">
 
-<div class="apple-card">
+### Caching strategy
 
-<h3 style="color: var(--apple-blue); font-size: 1.25rem;">Build speed</h3>
+**Dependencies**
+- Cache SPM packages
+- Cache CocoaPods
+- Cache system tools
 
-<v-clicks>
-
-- **Incremental builds**
-  - Modular architecture
-  - Explicit dependencies
-
-- **Compilation**
-  - Parallel build jobs
-  - Whole module opt.
-
-</v-clicks>
+**Artifacts**
+- Cache build outputs
+- Binary frameworks
+- Remote caching (Tuist Cache)
 
 </div>
 
-<div class="apple-card">
+<div class="box">
 
-<h3 style="color: var(--apple-purple); font-size: 1.25rem;">Caching</h3>
+### Infrastructure
 
-<v-clicks>
+**Better runners**
+- Larger machines
+- Pre-warmed images
+- Local runner caches
 
-- **Dependencies**
-  - SPM/CocoaPods cache
-  - Homebrew packages
-
-- **Build artifacts**
-  - Derived data
-  - Binary frameworks
-
-</v-clicks>
-
-</div>
-
-<div class="apple-card">
-
-<h3 style="color: var(--apple-pink); font-size: 1.25rem;">Infrastructure</h3>
-
-<v-clicks>
-
-- **Runner optimization**
-  - Larger machines
-  - Pre-warmed images
-
-- **Pipeline design**
-  - Fail fast
-  - Parallel jobs
-
-</v-clicks>
+**Smarter pipeline**
+- Fail fast on errors
+- Run fast tests first
+- Parallel job execution
 
 </div>
 
@@ -603,77 +824,34 @@ layout: center
 
 ---
 
-<div class="hero-section">
+# What matters
 
-<div class="section-header">
+<div style="margin-top: var(--space-xl);">
 
-# Key Takeaways
+**Development phase**
+- Project generators eliminate Xcode project conflicts
+- Split monolith files to reduce merge conflicts
+- Clean module boundaries enable incremental builds
+- Modular architecture prevents build issues
+- Version locking ensures consistency
 
-<div class="phase-divider"></div>
+<div style="margin-top: var(--space-xl);"></div>
 
-</div>
+**Integration phase**
+- Parallelization maximizes limited resources
+- Aggressive caching reduces redundant work
+- Isolated tests prevent flakiness
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; max-width: 1000px; text-align: left; margin-top: 2rem;">
+<div style="margin-top: var(--space-xl);"></div>
 
-<div class="apple-card">
-
-<h3 style="color: var(--apple-blue);">Development</h3>
-
-<v-clicks>
-
-- Use project generators
-- Build modular architectures
-- Lock your dependencies
-- Automate environment setup
-
-</v-clicks>
-
-</div>
-
-<div class="apple-card">
-
-<h3 style="color: var(--apple-purple);">Integration</h3>
-
-<v-clicks>
-
-- Parallelize everything possible
-- Cache aggressively
-- Isolate and stabilize tests
-- Monitor and iterate
-
-</v-clicks>
-
-</div>
-
-</div>
-
-<v-click>
-
-<div style="margin-top: 3rem; text-align: center;">
-<div class="apple-badge" style="background: linear-gradient(135deg, var(--apple-blue), var(--apple-purple)); font-size: 1.1rem; padding: 0.5rem 1.5rem;">
-Invest in architecture
-</div>
-<p class="subtitle" style="margin-top: 1rem;">Good project structure pays dividends everywhere</p>
-</div>
-
-</v-click>
+The common thread? **Architecture**. Good project structure makes everything else easier.
 
 </div>
 
 ---
-layout: center
----
 
-<div class="hero-section">
+# You can be productive with Xcode
 
-# <span class="gradient-text">You can be productive<br>with Xcode</span>
-
-<p class="subtitle" style="font-size: 1.5rem; margin-top: 2rem; margin-bottom: 3rem;">
-And now you have the tools to prove it
-</p>
-
-<div class="phase-divider"></div>
-
-<p class="subtitle" style="margin-top: 3rem;">Thank you</p>
-
+<div style="margin-top: var(--space-2xl); color: var(--color-text-muted); font-size: 1.25rem;">
+You just have to set it up right
 </div>
