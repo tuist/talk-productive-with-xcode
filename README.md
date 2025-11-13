@@ -1,11 +1,25 @@
-# Welcome to [Slidev](https://github.com/slidevjs/slidev)!
+# You can be productive with Xcode, and you know it
 
-To start the slide show:
+A practical guide to fixing the stuff that actually slows you down.
 
-- `pnpm install`
-- `pnpm dev`
-- visit <http://localhost:3030>
+## What's covered
 
-Edit the [slides.md](./slides.md) to see the changes.
+**Development phase** — Problems on your machine
+- Frequent merge conflicts
+- Clean builds & derived data
+- Architecture & build performance
+- Environment non-determinism
 
-Learn more about Slidev at the [documentation](https://sli.dev/).
+**Integration phase** — Problems on CI
+- Limited CI concurrency
+- Test flakiness
+- Slow builds
+
+## Running the presentation
+
+```bash
+pnpm install
+pnpm dev
+```
+
+Visit <http://localhost:3030>
