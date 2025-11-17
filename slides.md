@@ -260,7 +260,7 @@ A practical guide to fixing the stuff that actually slows you down
 
 ---
 
-# Hi, I'm Pedro
+# Hi, I'm Pedro 👋
 
 <div style="margin-top: var(--space-2xl); font-size: 1.15rem; line-height: 1.8;">
 
@@ -276,24 +276,25 @@ Enjoy building dev tools
 
 ---
 
-# Two phases, seven problems
+# What we'll cover
 
 <div style="margin-top: var(--space-2xl);">
 
 **Development** — the stuff that happens on your machine
 
 - Frequent merge conflicts
-- Clean builds you shouldn't need
+- Clean builds & derived data
 - Architecture & build performance
-- "Works on my machine" moments
+- Non-determinism across environments
 
 <div style="margin-top: var(--space-xl);"></div>
 
 **Integration** — the stuff that happens on CI
 
-- CI queues that waste your time
-- Flaky tests that waste everyone's time
-- Slow builds that waste company money
+- CI infrastructure constraints
+- Caching strategies (dependencies, builds, registry)
+- Remote caching solutions (Bazel, Tuist, Xcode)
+- Test optimization (selective testing, parallelization, flakiness)
 
 </div>
 
@@ -677,42 +678,564 @@ class: phase-intro
 
 ---
 
-# Limited
+# Capped Parallelism
 ## CI Concurrency
 
-<div class="quiet">Or: why our PRs take 2 hours</div>
+<div class="quiet">Apple's licensing limits scale</div>
 
 <div class="cols">
 
 <div>
 
-### The constraints
+### The constraint
 
-macOS runners are expensive. There aren't many of them. Everyone wants them.
+Apple's licensing: 24h min retention, 2 VMs max per host.
 
-Your PR is stuck behind 12 other PRs and nobody's getting coffee today.
+You can't elastically scale macOS runners like you can with Linux.
+
+Your PR waits behind 12 others. Nobody's getting coffee today.
 
 </div>
 
 <div>
 
-### Make the most of it
+### Use runner providers
 
-**Parallelize intelligently**
-- Run tests in parallel (really)
-- Split schemes across runners
-- Matrix builds for multi-platform
+Companies that provide elastic capacity:
 
-**Don't run what you don't need**
-- Affected tests only
-- Skip unchanged modules
-- Different strategies per branch
+- Namespace.so (Buildkite)
+- GitHub Actions
+- MacStadium
+- AWS EC2 Mac
 
-**Cache everything**
-- SPM dependencies
-- CocoaPods
-- Homebrew
-- Build artifacts if you can
+They manage the licensing constraints and hardware pool.
+
+</div>
+
+</div>
+
+---
+
+# Resource Contention
+## CI Performance
+
+<div class="quiet">You can't isolate resources physically</div>
+
+<div class="cols">
+
+<div>
+
+### The problem
+
+Multiple builds share the same machine.
+
+CPU, memory, disk I/O all compete.
+
+Build times become unpredictable. Your 10-minute build takes 25 minutes.
+
+</div>
+
+<div>
+
+### Dedicated instances
+
+Providers with dedicated resources:
+
+- Namespace.so (Buildkite)
+- MacStadium (Orka)
+- AWS EC2 Mac (Dedicated Hosts)
+
+Eliminate resource contention for predictable build times.
+
+</div>
+
+</div>
+
+---
+
+# Not Fast Enough Hardware
+## CI Speed
+
+<div class="quiet">Limited to available Mac configurations</div>
+
+<div class="cols">
+
+<div>
+
+### The limitation
+
+You're constrained by:
+- What machines you can buy
+- What you can afford to keep running
+- Depreciation and replacement cycles
+
+Older hardware means slower builds.
+
+Slower builds mean longer feedback loops.
+
+</div>
+
+<div>
+
+### Latest hardware
+
+Not all providers are fast to upgrade (e.g., Xcode Cloud).
+
+Choose providers that maintain current hardware (M3, M4).
+
+**Self-hosted:** You manage depreciation and replacement cycles. Few companies account for the true cost.
+
+</div>
+
+</div>
+
+---
+
+# Dependency & Tool Caching
+## Pipeline Optimization
+
+<div class="quiet">Don't reinstall what hasn't changed</div>
+
+<div class="cols">
+
+<div>
+
+### The waste
+
+Typical pipeline steps:
+
+1. Install toolchain (Homebrew, mise)
+2. Install dependencies (SPM)
+3. Run action (build, test)
+
+Without caching, steps 1 and 2 run every time, adding minutes even when nothing changed.
+
+</div>
+
+<div>
+
+### Cache everything
+
+**Toolchain:**
+- Homebrew packages
+- mise installations
+
+**Dependencies:**
+- SPM: Cache `.build` and DerivedData
+
+**Cache keys:** Lock files, tool versions, OS version.
+
+</div>
+
+</div>
+
+---
+
+# Cache Performance
+## Storage Matters
+
+<div class="quiet">Remote vs local storage</div>
+
+<div class="cols">
+
+<div>
+
+### Two approaches
+
+**Remote cache (S3):** API calls, network overhead.
+
+**Mounted volumes:** Filesystem access, faster.
+
+Both shareable across runners.
+
+</div>
+
+<div>
+
+### Prefer mounted volumes
+
+Faster with direct filesystem I/O.
+
+Not all runner services provide them.
+
+Fall back to remote cache when unavailable.
+
+</div>
+
+</div>
+
+---
+
+# SwiftPM Cache Optimization
+## Reduce cache size
+
+<div class="quiet">Remove .git directories before caching</div>
+
+<div class="cols">
+
+<div>
+
+### The problem
+
+SwiftPM downloads include .git directories.
+
+These add significant size to your cache.
+
+Remote cache becomes slower to upload/download.
+
+</div>
+
+<div>
+
+### Workflow
+
+**1. Use custom location:**
+```bash
+xcodebuild -clonedSourcePackagesDirPath SourcePackages
+```
+
+**2. Remove .git:**
+```bash
+find SourcePackages -name ".git" -exec rm -rf {} +
+```
+
+**3. Cache** the cleaned directory.
+
+</div>
+
+</div>
+
+---
+
+# Tuist Registry
+## Faster dependency resolution
+
+<div class="quiet">Package registry for SwiftPM</div>
+
+<div class="cols">
+
+<div>
+
+### What it provides
+
+- Only download commits you need
+- No full git history
+- Global edge storage (low latency)
+- Access to Swift Package Index
+- Faster dependency resolution
+
+</div>
+
+<div>
+
+### Setup
+
+```bash
+tuist registry setup
+tuist registry login
+```
+
+<div class="tip">
+
+### A gift for the community
+
+Becoming available without account in the following weeks.
+
+</div>
+
+[docs.tuist.dev/guides/features/registry](https://docs.tuist.dev/en/guides/features/registry)
+
+</div>
+
+</div>
+
+---
+
+# Build Process Caching
+## Remote Cache
+
+<div class="quiet">Skip build steps by fetching outputs from network</div>
+
+<div class="cols">
+
+<div>
+
+### How it works
+
+Instead of rebuilding, fetch cached outputs from network.
+
+**Requires hermetism:**
+- No side effects
+- Same inputs = same outputs
+- Deterministic builds
+- Inputs can be hashed
+
+Without hermetism, cache is unreliable.
+
+</div>
+
+<div>
+
+### Implementation
+
+**Process:**
+- Hash all inputs (source + dependencies)
+- Check remote cache for match
+- Download artifacts or build + upload
+
+**Solutions:**
+- Bazel
+- Module cache (Tuist)
+- Xcode cache
+
+**Prerequisite:** Clean dependency graph.
+
+</div>
+
+</div>
+
+---
+
+# Bazel
+## Action-based caching
+
+<div class="quiet">Replaces Xcode build system</div>
+
+<div class="cols">
+
+<div>
+
+### How it works
+
+Breaks build into discrete actions (inputs, outputs, command).
+
+**Cache:**
+- Action cache (AC): hash → result
+- Content storage (CAS): output files
+
+Checks AC, downloads from CAS if available.
+
+</div>
+
+<div>
+
+### Tradeoffs
+
+**Pros:**
+- Very granular (action-level)
+- Fast (up to 3x)
+- Mature tooling
+
+**Cons:**
+- Steep learning curve
+- Replaces Xcode build system
+- Migration effort required
+
+**Best for:** Large teams with infrastructure investment.
+
+</div>
+
+</div>
+
+---
+
+# Module Cache (Tuist)
+## Target-level caching
+
+<div class="quiet">Works with Xcode build system</div>
+
+<div class="cols">
+
+<div>
+
+### How it works
+
+Caches entire frameworks/libraries at module-level.
+
+Pre-fetches binaries, replaces unchanged targets with pre-compiled versions.
+
+Developers use Xcode normally.
+
+</div>
+
+<div>
+
+### Tradeoffs
+
+**Pros:**
+- Keep using Xcode
+- Faster than Xcode 26 cache
+- Easier adoption than Bazel
+
+**Cons:**
+- Coarse-grained (module-level)
+- Requires modular architecture
+- Needs Tuist project generation
+
+**Best for:** Teams using or open to Tuist.
+
+</div>
+
+</div>
+
+---
+
+# Xcode Cache
+## Native compilation cache
+
+<div class="quiet">Xcode 26 built-in feature</div>
+
+<div class="cols">
+
+<div>
+
+### How it works
+
+Caches compilation outputs (object files, modules).
+
+Detects same inputs + settings, retrieves from cache.
+
+**Enable:**
+```
+COMPILATION_CACHE_ENABLE_CACHING = YES
+```
+
+Hash-based, not path-based.
+
+</div>
+
+<div>
+
+### Tradeoffs
+
+**Pros:**
+- Native, easy to enable
+
+**Cons:**
+- ~30% improvement (limited)
+- Limited task support
+- No SPM dependencies yet
+- Still early
+
+**Best for:** Minimal setup with native tooling.
+
+</div>
+
+</div>
+
+---
+
+# The Future of Caching
+## Our vision
+
+<div class="quiet">Bringing cache closer to you</div>
+
+<div class="cols">
+
+<div>
+
+**Latency & bandwidth matter:**
+- Latency: Checking if there's a cached result
+- Bandwidth: Downloading the output
+
+**Beyond CI:**
+
+CI providers solve this for CI environments.
+
+We want to solve it for **all environments**: local, CI, and agentic.
+
+</div>
+
+<div>
+
+**Our approach:**
+- Cache servers in your offices & regions
+- Exploring P2P cache
+- Slicing technology & service ([Fabrik](https://github.com/tuist/fabrik))
+- Works with any build system
+
+Bringing the cache as close to you as possible.
+
+</div>
+
+</div>
+
+---
+
+# Selective Test Execution
+## Smart Testing
+
+<div class="quiet">Run only what's affected</div>
+
+<div class="cols">
+
+<div>
+
+### The problem
+
+Changed one file? Running 2,000 tests anyway.
+
+Most tests are unrelated to your changes.
+
+Wastes time and money.
+
+</div>
+
+<div>
+
+### Solutions
+
+**Graph-based selection:**
+- Analyze dependency graph
+- Find affected modules
+- Run only impacted tests
+
+**Tools:**
+- [Tuist Selective Testing](https://docs.tuist.dev/en/guides/develop/test/run#selective-testing)
+- [mikeger/XcodeSelectiveTesting](https://github.com/mikeger/XcodeSelectiveTesting)
+- Custom git diff scripts
+
+**Strategy:** Selective on PRs, full suite on main.
+
+</div>
+
+</div>
+
+---
+
+# Test Parallelization
+## Running tests faster
+
+<div class="quiet">Maximize concurrency</div>
+
+<div class="cols">
+
+<div>
+
+### Parallelization strategies
+
+**Within environment:**
+- Use scheme/test plan parallelization
+- Multiple tests run on same machine
+
+**Across environments:**
+- Build without testing
+- Distribute and test without building
+- Split tests across multiple runners
+
+</div>
+
+<div>
+
+### Trade-offs & future
+
+**Warning:**
+
+Parallelization can expose flakiness (e.g., mutating global state, shared resources).
+
+**Coming soon:**
+
+Tuist is bringing dynamic sharding for smarter test distribution.
 
 </div>
 
@@ -728,95 +1251,28 @@ Your PR is stuck behind 12 other PRs and nobody's getting coffee today.
 
 <div>
 
-### Usually it's one of these
+### Common causes
 
-Timing issues. Race conditions. Tests that touch each other's state. Network calls. Animations you're not waiting for.
+Timing issues, race conditions, shared state, network calls, animations.
 
-The test suite is lying to you and you can't trust it anymore.
+The test suite is lying to you.
 
 </div>
 
 <div>
 
-### Stop the lying
+### Solutions
 
-**Isolation**
-- Tests should not share state
-- Real setup/teardown
-- No global mutable state
+**Isolation:**
+- No shared state
+- Scoped state (use task locals)
 
-**Determinism**
-- Mock the network
+**Determinism:**
+- Mock network
 - Stub external services
-- Control time and dates
+- Control time/dates
 
-**UI tests**
-- Wait for conditions, not for time
-- Use accessibility identifiers
-- Never use `sleep()`
-
-**Track it**
-- Note which tests flake
-- Run them multiple times in CI
-- Fix or delete them
-
-</div>
-
-</div>
-
----
-
-# Slow CI
-
-<div class="quiet">Every second costs actual money</div>
-
-<div class="grid-3">
-
-<div class="box">
-
-### Build speed
-
-**Go modular**
-- Smaller compilation units
-- Explicit dependencies
-- Hide implementation details
-
-**Compiler settings**
-- Whole module optimization
-- Parallelize builds
-- Use the build timeline
-
-</div>
-
-<div class="box">
-
-### Caching strategy
-
-**Dependencies**
-- Cache SPM packages
-- Cache CocoaPods
-- Cache system tools
-
-**Artifacts**
-- Cache build outputs
-- Binary frameworks
-- Remote caching (Tuist Cache)
-
-</div>
-
-<div class="box">
-
-### Infrastructure
-
-**Better runners**
-- Larger machines
-- Pre-warmed images
-- Local runner caches
-
-**Smarter pipeline**
-- Fail fast on errors
-- Run fast tests first
-- Parallel job execution
+**UI tests:** Wait for conditions, not time.
 
 </div>
 
@@ -826,25 +1282,94 @@ The test suite is lying to you and you can't trust it anymore.
 
 # What matters
 
-<div style="margin-top: var(--space-xl);">
+<div class="cols">
+
+<div>
 
 **Development phase**
 - Project generators eliminate Xcode project conflicts
 - Split monolith files to reduce merge conflicts
 - Clean module boundaries enable incremental builds
-- Modular architecture prevents build issues
+- Compilation cache (Xcode 26) moves away from DerivedData
 - Version locking ensures consistency
 
-<div style="margin-top: var(--space-xl);"></div>
+</div>
+
+<div>
 
 **Integration phase**
-- Parallelization maximizes limited resources
-- Aggressive caching reduces redundant work
+- Use runner providers to manage CI constraints
+- Cache smartly: dependencies, builds (choose: Bazel/Tuist/Xcode)
+- Optimize SwiftPM: remove .git, use Tuist Registry
+- Selective testing + parallelization maximize efficiency
 - Isolated tests prevent flakiness
 
-<div style="margin-top: var(--space-xl);"></div>
+</div>
+
+</div>
+
+<div style="margin-top: var(--space-xl);">
 
 The common thread? **Architecture**. Good project structure makes everything else easier.
+
+</div>
+
+---
+
+# One more thing
+
+<div class="quiet">Agentic coding tools</div>
+
+<div class="cols">
+
+<div>
+
+### The opportunity
+
+Agentic coding tools can produce code faster than ever.
+
+**The challenges:**
+- Multiple project copies
+- Context window limits
+- Xcode project modifications
+- File additions/removals
+
+</div>
+
+<div>
+
+### Set yourself up
+
+**Compile cache** for multiple copies:
+- Use `COMPILATION_CACHE_ENABLE_CACHING`
+- Share cache directory across copies
+
+**Filter build noise:**
+- [xcsift](https://github.com/ldomaradzki/xcsift) filters xcodebuild output
+
+**Help agents CRUD projects:**
+- Buildable folders for file changes
+- [xcodeproj-mcp-server](https://github.com/giginet/xcodeproj-mcp-server) for project edits
+
+</div>
+
+</div>
+
+---
+
+# Thank you
+
+<div style="margin-top: var(--space-2xl); font-size: 1.25rem; line-height: 1.8;">
+
+**Questions?**
+
+<div style="margin-top: var(--space-xl); color: var(--color-text-muted);">
+
+Pedro Piñera Buendía
+
+[@pepicrft](https://x.com/pepicrft) · [tuist.dev](https://tuist.dev)
+
+</div>
 
 </div>
 
