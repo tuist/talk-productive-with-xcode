@@ -280,7 +280,7 @@ Enjoy building dev tools
 
 <div style="margin-top: var(--space-2xl);">
 
-**Development** — the stuff that happens on your machine
+**💻 Development** — the stuff that happens on your machine
 
 - Frequent merge conflicts
 - Clean builds & derived data
@@ -289,7 +289,7 @@ Enjoy building dev tools
 
 <div style="margin-top: var(--space-xl);"></div>
 
-**Integration** — the stuff that happens on CI
+**🔄 Integration** — the stuff that happens on CI
 
 - CI infrastructure constraints
 - Caching strategies (dependencies, builds, registry)
@@ -302,11 +302,11 @@ Enjoy building dev tools
 class: phase-intro
 ---
 
-# Development
+# 💻 Development
 
 ---
 
-# Frequent Merge Conflicts
+# Frequent Merge Conflicts ⚔️
 ## Xcode Projects
 
 <div class="quiet">The `project.pbxproj` problem</div>
@@ -344,7 +344,7 @@ Every team member has hit this. Multiple times a week.
 
 ---
 
-# Frequent Merge Conflicts
+# Frequent Merge Conflicts ⚔️
 ## Buildable Folders
 
 <div class="quiet">From N-to-N to 1-to-1</div>
@@ -383,7 +383,7 @@ Add or remove files without touching `project.pbxproj`.
 
 ---
 
-# Frequent Merge Conflicts
+# Frequent Merge Conflicts ⚔️
 ## Monolith Files
 
 <div class="quiet">The files everyone touches</div>
@@ -427,7 +427,7 @@ Shows your top 20 most-modified files.
 
 ---
 
-# Clean Builds
+# Clean Builds 🧹
 ## & Derived Data
 
 <div class="quiet">Why it keeps breaking</div>
@@ -470,7 +470,7 @@ Mismatch → build system skips compiling dependencies it thinks aren't needed.
 
 ---
 
-# Clean Builds
+# Clean Builds 🧹
 ## How to fix it
 
 <div class="quiet">Make incremental builds reliable</div>
@@ -513,7 +513,7 @@ This shows where your code imports something that isn't declared as a dependency
 
 ---
 
-# Clean Builds
+# Clean Builds 🧹
 ## A path away from derived data
 
 <div class="quiet">Xcode 26's compilation cache</div>
@@ -553,7 +553,7 @@ Early feature, not all tasks cacheable yet.
 
 ---
 
-# Clean Builds
+# Clean Builds 🧹
 ## Related build settings
 
 <div class="quiet">Enabling compilation cache components</div>
@@ -596,7 +596,7 @@ Coordinates compilation tasks efficiently.
 
 ---
 
-# Architecture & Build Performance
+# Architecture & Build Performance 🏗️
 
 <div class="quiet">Why your architecture choices matter</div>
 
@@ -634,7 +634,7 @@ Features depend on protocols, implementations injected at app level.
 
 ---
 
-# Non-determinism
+# Non-determinism 🎲
 ## Across Environments
 
 <div class="quiet">The "works on my machine" special</div>
@@ -674,11 +674,11 @@ Features depend on protocols, implementations injected at app level.
 class: phase-intro
 ---
 
-# Integration
+# 🔄 Integration
 
 ---
 
-# Capped Parallelism
+# Capped Parallelism ⚡
 ## CI Concurrency
 
 <div class="quiet">Apple's licensing limits scale</div>
@@ -716,7 +716,7 @@ They manage the licensing constraints and hardware pool.
 
 ---
 
-# Resource Contention
+# Resource Contention 🏃‍♂️
 ## CI Performance
 
 <div class="quiet">You can't isolate resources physically</div>
@@ -753,7 +753,7 @@ Eliminate resource contention for predictable build times.
 
 ---
 
-# Not Fast Enough Hardware
+# Not Fast Enough Hardware 🐌
 ## CI Speed
 
 <div class="quiet">Limited to available Mac configurations</div>
@@ -791,7 +791,7 @@ Choose providers that maintain current hardware (M3, M4).
 
 ---
 
-# Dependency & Tool Caching
+# Dependency & Tool Caching 📦
 ## Pipeline Optimization
 
 <div class="quiet">Don't reinstall what hasn't changed</div>
@@ -831,7 +831,7 @@ Without caching, steps 1 and 2 run every time, adding minutes even when nothing 
 
 ---
 
-# Cache Performance
+# Cache Performance 💾
 ## Storage Matters
 
 <div class="quiet">Remote vs local storage</div>
@@ -866,7 +866,7 @@ Fall back to remote cache when unavailable.
 
 ---
 
-# SwiftPM Cache Optimization
+# SwiftPM Cache Optimization 📦
 ## Reduce cache size
 
 <div class="quiet">Remove .git directories before caching</div>
@@ -907,7 +907,7 @@ find SourcePackages -name ".git" -exec rm -rf {} +
 
 ---
 
-# Tuist Registry
+# Tuist Registry 🚀
 ## Faster dependency resolution
 
 <div class="quiet">Package registry for SwiftPM</div>
@@ -951,7 +951,7 @@ Becoming available without account in the following weeks.
 
 ---
 
-# Build Process Caching
+# Build Process Caching 💾
 ## Remote Cache
 
 <div class="quiet">Skip build steps by fetching outputs from network</div>
@@ -996,7 +996,7 @@ Without hermetism, cache is unreliable.
 
 ---
 
-# Bazel
+# Bazel ⚙️
 ## Action-based caching
 
 <div class="quiet">Replaces Xcode build system</div>
@@ -1039,7 +1039,7 @@ Checks AC, downloads from CAS if available.
 
 ---
 
-# Module Cache (Tuist)
+# Module Cache (Tuist) 📦
 ## Target-level caching
 
 <div class="quiet">Works with Xcode build system</div>
@@ -1080,7 +1080,7 @@ Developers use Xcode normally.
 
 ---
 
-# Xcode Cache
+# Xcode Cache 💾
 ## Native compilation cache
 
 <div class="quiet">Xcode 26 built-in feature</div>
@@ -1125,7 +1125,7 @@ Hash-based, not path-based.
 
 ---
 
-# The Future of Caching
+# The Future of Caching 🔮
 ## Our vision
 
 <div class="quiet">Bringing cache closer to you</div>
@@ -1162,7 +1162,7 @@ Bringing the cache as close to you as possible.
 
 ---
 
-# Selective Test Execution
+# Selective Test Execution 🎯
 ## Smart Testing
 
 <div class="quiet">Run only what's affected</div>
@@ -1203,7 +1203,7 @@ Wastes time and money.
 
 ---
 
-# Test Parallelization
+# Test Parallelization ⚡
 ## Running tests faster
 
 <div class="quiet">Maximize concurrency</div>
@@ -1243,7 +1243,7 @@ Tuist is bringing dynamic sharding for smarter test distribution.
 
 ---
 
-# Test Flakiness
+# Test Flakiness 🎲
 
 <div class="quiet">The build was red, now it's green, nobody changed anything</div>
 
@@ -1280,13 +1280,13 @@ The test suite is lying to you.
 
 ---
 
-# What matters
+# What matters 🎯
 
 <div class="cols">
 
 <div>
 
-**Development phase**
+**💻 Development phase**
 - Project generators eliminate Xcode project conflicts
 - Split monolith files to reduce merge conflicts
 - Clean module boundaries enable incremental builds
@@ -1297,7 +1297,7 @@ The test suite is lying to you.
 
 <div>
 
-**Integration phase**
+**🔄 Integration phase**
 - Use runner providers to manage CI constraints
 - Cache smartly: dependencies, builds (choose: Bazel/Tuist/Xcode)
 - Optimize SwiftPM: remove .git, use Tuist Registry
@@ -1316,7 +1316,7 @@ The common thread? **Architecture**. Good project structure makes everything els
 
 ---
 
-# One more thing
+# One more thing 🤖
 
 <div class="quiet">Agentic coding tools</div>
 
@@ -1357,17 +1357,17 @@ Agentic coding tools can produce code faster than ever.
 
 ---
 
-# Thank you
+# Thank you 🙏
 
 <div style="margin-top: var(--space-2xl); font-size: 1.25rem; line-height: 1.8;">
 
-**Questions?**
+**Questions? 💬**
 
 <div style="margin-top: var(--space-xl); color: var(--color-text-muted);">
 
 Pedro Piñera Buendía
 
-[@pepicrft](https://x.com/pepicrft) · [tuist.dev](https://tuist.dev)
+[@pepicrft](https://x.com/pepicrft) · [tuist.dev](https://tuist.dev) · pedro@tuist.dev
 
 </div>
 
