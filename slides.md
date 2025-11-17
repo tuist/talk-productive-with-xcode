@@ -11,15 +11,6 @@ mdc: true
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  /* Colors */
-  --color-text: #1a1a1a;
-  --color-text-muted: #666;
-  --color-text-subtle: #999;
-  --color-bg: #ffffff;
-  --color-bg-muted: #fafafa;
-  --color-accent: #1a1a1a;
-  --color-border: #eee;
-
   /* Typography */
   --font-base: 'Inter', -apple-system, system-ui, sans-serif;
   --size-h1: 2.75rem;
@@ -172,8 +163,8 @@ code {
 
 /* Tip admonition */
 .tip {
-  background: #f0f9ff;
-  border-left: 4px solid #0284c7;
+  background: var(--color-bg-muted);
+  border-left: 4px solid var(--color-accent);
   padding: var(--space-md);
   border-radius: var(--radius);
   margin: var(--space-md) 0;
@@ -181,7 +172,7 @@ code {
 
 .tip h3 {
   margin-top: 0;
-  color: #0284c7;
+  color: var(--color-accent);
   font-size: var(--size-h3);
   margin-bottom: var(--space-xs);
 }
@@ -246,6 +237,42 @@ code {
   position: relative;
   z-index: 2;
 }
+
+/* Per-slide OKLCH colors with varying hue and lightness */
+.slidev-page-1 { --color-text: oklch(0.20 0.08 230); --color-text-muted: oklch(0.45 0.06 230); --color-text-subtle: oklch(0.60 0.05 230); --color-bg: oklch(0.97 0.02 230); --color-bg-muted: oklch(0.94 0.02 230); --color-accent: oklch(0.20 0.08 230); --color-border: oklch(0.85 0.03 230); }
+.slidev-page-2 { --color-text: oklch(0.21 0.08 235); --color-text-muted: oklch(0.46 0.06 235); --color-text-subtle: oklch(0.61 0.05 235); --color-bg: oklch(0.96 0.02 235); --color-bg-muted: oklch(0.93 0.02 235); --color-accent: oklch(0.21 0.08 235); --color-border: oklch(0.84 0.03 235); }
+.slidev-page-3 { --color-text: oklch(0.22 0.09 240); --color-text-muted: oklch(0.47 0.07 240); --color-text-subtle: oklch(0.62 0.06 240); --color-bg: oklch(0.95 0.03 240); --color-bg-muted: oklch(0.92 0.03 240); --color-accent: oklch(0.22 0.09 240); --color-border: oklch(0.83 0.04 240); }
+.slidev-page-4 { --color-text: oklch(0.23 0.09 245); --color-text-muted: oklch(0.48 0.07 245); --color-text-subtle: oklch(0.63 0.06 245); --color-bg: oklch(0.94 0.03 245); --color-bg-muted: oklch(0.91 0.03 245); --color-accent: oklch(0.23 0.09 245); --color-border: oklch(0.82 0.04 245); }
+.slidev-page-5 { --color-text: oklch(0.24 0.10 250); --color-text-muted: oklch(0.49 0.08 250); --color-text-subtle: oklch(0.64 0.07 250); --color-bg: oklch(0.93 0.04 250); --color-bg-muted: oklch(0.90 0.04 250); --color-accent: oklch(0.24 0.10 250); --color-border: oklch(0.81 0.05 250); }
+.slidev-page-6 { --color-text: oklch(0.25 0.10 255); --color-text-muted: oklch(0.50 0.08 255); --color-text-subtle: oklch(0.65 0.07 255); --color-bg: oklch(0.92 0.04 255); --color-bg-muted: oklch(0.89 0.04 255); --color-accent: oklch(0.25 0.10 255); --color-border: oklch(0.80 0.05 255); }
+.slidev-page-7 { --color-text: oklch(0.24 0.11 260); --color-text-muted: oklch(0.49 0.09 260); --color-text-subtle: oklch(0.64 0.08 260); --color-bg: oklch(0.93 0.05 260); --color-bg-muted: oklch(0.90 0.05 260); --color-accent: oklch(0.24 0.11 260); --color-border: oklch(0.81 0.06 260); }
+.slidev-page-8 { --color-text: oklch(0.23 0.11 265); --color-text-muted: oklch(0.48 0.09 265); --color-text-subtle: oklch(0.63 0.08 265); --color-bg: oklch(0.94 0.05 265); --color-bg-muted: oklch(0.91 0.05 265); --color-accent: oklch(0.23 0.11 265); --color-border: oklch(0.82 0.06 265); }
+.slidev-page-9 { --color-text: oklch(0.22 0.12 270); --color-text-muted: oklch(0.47 0.10 270); --color-text-subtle: oklch(0.62 0.09 270); --color-bg: oklch(0.95 0.06 270); --color-bg-muted: oklch(0.92 0.06 270); --color-accent: oklch(0.22 0.12 270); --color-border: oklch(0.83 0.07 270); }
+.slidev-page-10 { --color-text: oklch(0.21 0.12 275); --color-text-muted: oklch(0.46 0.10 275); --color-text-subtle: oklch(0.61 0.09 275); --color-bg: oklch(0.96 0.06 275); --color-bg-muted: oklch(0.93 0.06 275); --color-accent: oklch(0.21 0.12 275); --color-border: oklch(0.84 0.07 275); }
+.slidev-page-11 { --color-text: oklch(0.20 0.13 280); --color-text-muted: oklch(0.45 0.11 280); --color-text-subtle: oklch(0.60 0.10 280); --color-bg: oklch(0.97 0.07 280); --color-bg-muted: oklch(0.94 0.07 280); --color-accent: oklch(0.20 0.13 280); --color-border: oklch(0.85 0.08 280); }
+.slidev-page-12 { --color-text: oklch(0.21 0.13 285); --color-text-muted: oklch(0.46 0.11 285); --color-text-subtle: oklch(0.61 0.10 285); --color-bg: oklch(0.96 0.07 285); --color-bg-muted: oklch(0.93 0.07 285); --color-accent: oklch(0.21 0.13 285); --color-border: oklch(0.84 0.08 285); }
+.slidev-page-13 { --color-text: oklch(0.22 0.11 290); --color-text-muted: oklch(0.47 0.09 290); --color-text-subtle: oklch(0.62 0.08 290); --color-bg: oklch(0.95 0.05 290); --color-bg-muted: oklch(0.92 0.05 290); --color-accent: oklch(0.22 0.11 290); --color-border: oklch(0.83 0.06 290); }
+.slidev-page-14 { --color-text: oklch(0.23 0.10 295); --color-text-muted: oklch(0.48 0.08 295); --color-text-subtle: oklch(0.63 0.07 295); --color-bg: oklch(0.94 0.04 295); --color-bg-muted: oklch(0.91 0.04 295); --color-accent: oklch(0.23 0.10 295); --color-border: oklch(0.82 0.05 295); }
+.slidev-page-15 { --color-text: oklch(0.24 0.09 300); --color-text-muted: oklch(0.49 0.07 300); --color-text-subtle: oklch(0.64 0.06 300); --color-bg: oklch(0.93 0.03 300); --color-bg-muted: oklch(0.90 0.03 300); --color-accent: oklch(0.24 0.09 300); --color-border: oklch(0.81 0.04 300); }
+.slidev-page-16 { --color-text: oklch(0.25 0.08 305); --color-text-muted: oklch(0.50 0.06 305); --color-text-subtle: oklch(0.65 0.05 305); --color-bg: oklch(0.92 0.02 305); --color-bg-muted: oklch(0.89 0.02 305); --color-accent: oklch(0.25 0.08 305); --color-border: oklch(0.80 0.03 305); }
+.slidev-page-17 { --color-text: oklch(0.24 0.09 310); --color-text-muted: oklch(0.49 0.07 310); --color-text-subtle: oklch(0.64 0.06 310); --color-bg: oklch(0.93 0.03 310); --color-bg-muted: oklch(0.90 0.03 310); --color-accent: oklch(0.24 0.09 310); --color-border: oklch(0.81 0.04 310); }
+.slidev-page-18 { --color-text: oklch(0.23 0.10 315); --color-text-muted: oklch(0.48 0.08 315); --color-text-subtle: oklch(0.63 0.07 315); --color-bg: oklch(0.94 0.04 315); --color-bg-muted: oklch(0.91 0.04 315); --color-accent: oklch(0.23 0.10 315); --color-border: oklch(0.82 0.05 315); }
+.slidev-page-19 { --color-text: oklch(0.22 0.11 320); --color-text-muted: oklch(0.47 0.09 320); --color-text-subtle: oklch(0.62 0.08 320); --color-bg: oklch(0.95 0.05 320); --color-bg-muted: oklch(0.92 0.05 320); --color-accent: oklch(0.22 0.11 320); --color-border: oklch(0.83 0.06 320); }
+.slidev-page-20 { --color-text: oklch(0.21 0.12 325); --color-text-muted: oklch(0.46 0.10 325); --color-text-subtle: oklch(0.61 0.09 325); --color-bg: oklch(0.96 0.06 325); --color-bg-muted: oklch(0.93 0.06 325); --color-accent: oklch(0.21 0.12 325); --color-border: oklch(0.84 0.07 325); }
+.slidev-page-21 { --color-text: oklch(0.20 0.13 330); --color-text-muted: oklch(0.45 0.11 330); --color-text-subtle: oklch(0.60 0.10 330); --color-bg: oklch(0.97 0.07 330); --color-bg-muted: oklch(0.94 0.07 330); --color-accent: oklch(0.20 0.13 330); --color-border: oklch(0.85 0.08 330); }
+.slidev-page-22 { --color-text: oklch(0.21 0.12 335); --color-text-muted: oklch(0.46 0.10 335); --color-text-subtle: oklch(0.61 0.09 335); --color-bg: oklch(0.96 0.06 335); --color-bg-muted: oklch(0.93 0.06 335); --color-accent: oklch(0.21 0.12 335); --color-border: oklch(0.84 0.07 335); }
+.slidev-page-23 { --color-text: oklch(0.22 0.11 340); --color-text-muted: oklch(0.47 0.09 340); --color-text-subtle: oklch(0.62 0.08 340); --color-bg: oklch(0.95 0.05 340); --color-bg-muted: oklch(0.92 0.05 340); --color-accent: oklch(0.22 0.11 340); --color-border: oklch(0.83 0.06 340); }
+.slidev-page-24 { --color-text: oklch(0.23 0.10 345); --color-text-muted: oklch(0.48 0.08 345); --color-text-subtle: oklch(0.63 0.07 345); --color-bg: oklch(0.94 0.04 345); --color-bg-muted: oklch(0.91 0.04 345); --color-accent: oklch(0.23 0.10 345); --color-border: oklch(0.82 0.05 345); }
+.slidev-page-25 { --color-text: oklch(0.24 0.09 350); --color-text-muted: oklch(0.49 0.07 350); --color-text-subtle: oklch(0.64 0.06 350); --color-bg: oklch(0.93 0.03 350); --color-bg-muted: oklch(0.90 0.03 350); --color-accent: oklch(0.24 0.09 350); --color-border: oklch(0.81 0.04 350); }
+.slidev-page-26 { --color-text: oklch(0.25 0.08 355); --color-text-muted: oklch(0.50 0.06 355); --color-text-subtle: oklch(0.65 0.05 355); --color-bg: oklch(0.92 0.02 355); --color-bg-muted: oklch(0.89 0.02 355); --color-accent: oklch(0.25 0.08 355); --color-border: oklch(0.80 0.03 355); }
+.slidev-page-27 { --color-text: oklch(0.24 0.09 0); --color-text-muted: oklch(0.49 0.07 0); --color-text-subtle: oklch(0.64 0.06 0); --color-bg: oklch(0.93 0.03 0); --color-bg-muted: oklch(0.90 0.03 0); --color-accent: oklch(0.24 0.09 0); --color-border: oklch(0.81 0.04 0); }
+.slidev-page-28 { --color-text: oklch(0.23 0.10 5); --color-text-muted: oklch(0.48 0.08 5); --color-text-subtle: oklch(0.63 0.07 5); --color-bg: oklch(0.94 0.04 5); --color-bg-muted: oklch(0.91 0.04 5); --color-accent: oklch(0.23 0.10 5); --color-border: oklch(0.82 0.05 5); }
+.slidev-page-29 { --color-text: oklch(0.22 0.11 10); --color-text-muted: oklch(0.47 0.09 10); --color-text-subtle: oklch(0.62 0.08 10); --color-bg: oklch(0.95 0.05 10); --color-bg-muted: oklch(0.92 0.05 10); --color-accent: oklch(0.22 0.11 10); --color-border: oklch(0.83 0.06 10); }
+.slidev-page-30 { --color-text: oklch(0.21 0.12 15); --color-text-muted: oklch(0.46 0.10 15); --color-text-subtle: oklch(0.61 0.09 15); --color-bg: oklch(0.96 0.06 15); --color-bg-muted: oklch(0.93 0.06 15); --color-accent: oklch(0.21 0.12 15); --color-border: oklch(0.84 0.07 15); }
+.slidev-page-31 { --color-text: oklch(0.20 0.13 20); --color-text-muted: oklch(0.45 0.11 20); --color-text-subtle: oklch(0.60 0.10 20); --color-bg: oklch(0.97 0.07 20); --color-bg-muted: oklch(0.94 0.07 20); --color-accent: oklch(0.20 0.13 20); --color-border: oklch(0.85 0.08 20); }
+.slidev-page-32 { --color-text: oklch(0.21 0.12 25); --color-text-muted: oklch(0.46 0.10 25); --color-text-subtle: oklch(0.61 0.09 25); --color-bg: oklch(0.96 0.06 25); --color-bg-muted: oklch(0.93 0.06 25); --color-accent: oklch(0.21 0.12 25); --color-border: oklch(0.84 0.07 25); }
+.slidev-page-33 { --color-text: oklch(0.22 0.11 30); --color-text-muted: oklch(0.47 0.09 30); --color-text-subtle: oklch(0.62 0.08 30); --color-bg: oklch(0.95 0.05 30); --color-bg-muted: oklch(0.92 0.05 30); --color-accent: oklch(0.22 0.11 30); --color-border: oklch(0.83 0.06 30); }
+.slidev-page-34 { --color-text: oklch(0.23 0.10 35); --color-text-muted: oklch(0.48 0.08 35); --color-text-subtle: oklch(0.63 0.07 35); --color-bg: oklch(0.94 0.04 35); --color-bg-muted: oklch(0.91 0.04 35); --color-accent: oklch(0.23 0.10 35); --color-border: oklch(0.82 0.05 35); }
 </style>
 
 ---
@@ -380,6 +407,8 @@ Add or remove files without touching `project.pbxproj`.
 </div>
 
 </div>
+
+<div style="position: fixed; bottom: 2rem; right: 3.5rem; width: 16px; height: 16px; background: var(--color-accent); border-radius: 50%; z-index: 1000; opacity: 0.8;"></div>
 
 ---
 
@@ -551,6 +580,8 @@ Early feature, not all tasks cacheable yet.
 
 </div>
 
+<div style="position: fixed; bottom: 2rem; right: 3.5rem; width: 16px; height: 16px; background: var(--color-accent); border-radius: 50%; z-index: 1000; opacity: 0.8;"></div>
+
 ---
 
 # Clean Builds 🧹
@@ -670,6 +701,8 @@ Features depend on protocols, implementations injected at app level.
 
 </div>
 
+<div style="position: fixed; bottom: 2rem; right: 3.5rem; width: 16px; height: 16px; background: var(--color-accent); border-radius: 50%; z-index: 1000; opacity: 0.8;"></div>
+
 ---
 class: phase-intro
 ---
@@ -713,6 +746,8 @@ They manage the licensing constraints and hardware pool.
 </div>
 
 </div>
+
+<div style="position: fixed; bottom: 2rem; right: 3.5rem; width: 16px; height: 16px; background: var(--color-accent); border-radius: 50%; z-index: 1000; opacity: 0.8;"></div>
 
 ---
 
@@ -869,13 +904,7 @@ Fall back to remote cache when unavailable.
 # SwiftPM Cache Optimization 📦
 ## Reduce cache size
 
-<div class="quiet">Remove .git directories before caching</div>
-
-<div class="cols">
-
-<div>
-
-### The problem
+<div class="quiet">This approach doesn't work reliably</div>
 
 SwiftPM downloads include .git directories.
 
@@ -883,27 +912,7 @@ These add significant size to your cache.
 
 Remote cache becomes slower to upload/download.
 
-</div>
-
-<div>
-
-### Workflow
-
-**1. Use custom location:**
-```bash
-xcodebuild -clonedSourcePackagesDirPath SourcePackages
-```
-
-**2. Remove .git:**
-```bash
-find SourcePackages -name ".git" -exec rm -rf {} +
-```
-
-**3. Cache** the cleaned directory.
-
-</div>
-
-</div>
+**Removing .git doesn't work reliably** — SwiftPM may re-download packages.
 
 ---
 
@@ -948,6 +957,8 @@ Becoming available without account in the following weeks.
 </div>
 
 </div>
+
+<div style="position: fixed; bottom: 2rem; right: 3.5rem; width: 16px; height: 16px; background: var(--color-accent); border-radius: 50%; z-index: 1000; opacity: 0.8;"></div>
 
 ---
 
@@ -1078,6 +1089,8 @@ Developers use Xcode normally.
 
 </div>
 
+<div style="position: fixed; bottom: 2rem; right: 3.5rem; width: 16px; height: 16px; background: var(--color-accent); border-radius: 50%; z-index: 1000; opacity: 0.8;"></div>
+
 ---
 
 # Xcode Cache 💾
@@ -1122,6 +1135,8 @@ Hash-based, not path-based.
 </div>
 
 </div>
+
+<div style="position: fixed; bottom: 2rem; right: 3.5rem; width: 16px; height: 16px; background: var(--color-accent); border-radius: 50%; z-index: 1000; opacity: 0.8;"></div>
 
 ---
 
