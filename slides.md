@@ -238,6 +238,31 @@ code {
   z-index: 2;
 }
 
+/* Header with X handle and email */
+.slidev-layout::after {
+  content: 'x.com/pepicrft · pedro@tuist.dev';
+  position: fixed;
+  top: 1.5rem;
+  right: 3.5rem;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  z-index: 1000;
+  opacity: 0.6;
+}
+
+/* Repository link in top left */
+#slideshow::before {
+  content: '📄 github.com/tuist/talk-productive-with-xcode';
+  position: fixed;
+  top: 1.5rem;
+  left: 3.5rem;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  z-index: 1001;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
 /* Per-slide OKLCH colors with varying hue and lightness */
 .slidev-page-1 { --color-text: oklch(0.20 0.08 230); --color-text-muted: oklch(0.45 0.06 230); --color-text-subtle: oklch(0.60 0.05 230); --color-bg: oklch(0.97 0.02 230); --color-bg-muted: oklch(0.94 0.02 230); --color-accent: oklch(0.20 0.08 230); --color-border: oklch(0.85 0.03 230); }
 .slidev-page-2 { --color-text: oklch(0.21 0.08 235); --color-text-muted: oklch(0.46 0.06 235); --color-text-subtle: oklch(0.61 0.05 235); --color-bg: oklch(0.96 0.02 235); --color-bg-muted: oklch(0.93 0.02 235); --color-accent: oklch(0.21 0.08 235); --color-border: oklch(0.84 0.03 235); }
